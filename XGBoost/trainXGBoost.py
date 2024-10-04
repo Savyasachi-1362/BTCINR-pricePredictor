@@ -45,6 +45,13 @@ def train_xgboost(X_train, y_train, X_test, y_test, test_data):
     print("Best Parameters for 'open':", best_params)
     model_open = grid_search.best_estimator_
     open_pred = model_open.predict(X_test)
+    '''
+    Here, we are performing the grid search only for open beacuse all 4 metrics, open, high, low, close are correlated and
+    performing 4 grid searches is computationally expensive.
+
+    Using the best params for open for all 4 cases gave much better results (lower RMSE and MAE) than when using 4 different 
+    sets of params. 
+    '''
 
     #Configure GridSearchCV for 'high'
     model_high = XGBRegressor(random_state=42, **grid_search.best_params_)
